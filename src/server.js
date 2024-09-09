@@ -3,10 +3,9 @@ import { TasksDatabase } from './infraestructure/database/database.js';
 
 const hostname = '0.0.0.0';
 const port = 3333;
+const tasksDatabase = new TasksDatabase();
 
 const server = http.createServer(async (request, response) => {
-
-    const tasksDatabase = new TasksDatabase();
 
     const { url, method } = request;
 
@@ -32,7 +31,6 @@ const server = http.createServer(async (request, response) => {
         return response.end(JSON.stringify(task));
 
     }
-
 
 
 
