@@ -9,7 +9,7 @@ export class TasksDatabase {
     #db = {}
 
     #persist() {
-        fs.writeFile('db.json', JSON.stringify(this.#db));
+        fs.writeFile(databasePath, JSON.stringify(this.#db));
     }
 
     constructor() {
@@ -26,11 +26,11 @@ export class TasksDatabase {
         let tasks = this.#db['tasks'] ?? [];
 
         if (title) {
-            tasks = tasks.filter(task => title.toLowerCase() in task.title.toLowerCase());
+            tasks = tasks.filter(task => title.toLowerCase().includes(task.title.toLowerCase()));
         }
 
         if (description) {
-            tasks = tasks.filter(task => description.toLowerCase() in task.description.toLowerCase());
+            tasks = tasks.filter(task => description.toLowerCase().includes(task.description.toLowerCase()));
         }
 
         return tasks;
@@ -39,10 +39,10 @@ export class TasksDatabase {
     create(title, description) {
         const task = new Task(title, description);
 
-        if (!this.#db['tasks']) {
-            this.#db['tasks'] = [task];
-        } else {
+        if (Array.isArray(this.#db['tasks'])) {
             this.#db['tasks'].push(task);
+        } else {
+            this.#db['tasks'] = [task];
         }
 
         this.#persist();
