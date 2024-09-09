@@ -1,0 +1,15 @@
+{
+  "name": "01-fundamentos-nodejs",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Challenge proposed by Rocketseat to practice node fundamental tools. This project aims to create an API without using any framework, but only node itself",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --watch src/server.js"
+  },
+  "author": "Guilherme Rosada",
+  "license": "ISC",
+  "dependencies": {
+    "uuid": "^10.0.0"
+  }
+}
