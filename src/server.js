@@ -1,38 +1,22 @@
 import http from 'node:http';
-import { TasksDatabase } from './infraestructure/database/database.js';
+import { json } from './middlewares/json.js';
+import { routes } from './middlewares/routes.js';
 
 const hostname = '0.0.0.0';
 const port = 3333;
-const tasksDatabase = new TasksDatabase();
+
 
 const server = http.createServer(async (request, response) => {
 
     const { url, method } = request;
 
-    const buffers = [];
+    await json(request, response);
 
-    for await (const chunk of request) {
-        buffers.push(chunk);
-    }
+    const route = routes.find(route => {
+        return route.method === method && route.path === url;
+    })
 
-    try {
-        request.body = JSON.parse(Buffer.concat(buffers).toString());
-    } catch {
-        request.body = null;
-    }
-
-    if (method === 'POST' && url === '/tasks') {
-        const { title, description } = request.body;
-
-        const task = tasksDatabase.create(title, description);
-        
-        response.statusCode = 201;
-        response.setHeader('Content-Type', 'application/json');
-        return response.end(JSON.stringify(task));
-
-    }
-
-
+    return await route.handler(request, response);
 
 });
 
