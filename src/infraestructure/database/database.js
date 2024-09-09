@@ -26,11 +26,11 @@ export class TasksDatabase {
         let tasks = this.#db['tasks'] ?? [];
 
         if (title) {
-            tasks = tasks.filter(task => title.toLowerCase().includes(task.title.toLowerCase()));
+            tasks = tasks.filter(task => task.title.toLowerCase().includes(title.toLowerCase()));
         }
 
         if (description) {
-            tasks = tasks.filter(task => description.toLowerCase().includes(task.description.toLowerCase()));
+            tasks = tasks.filter(task => task.description.toLowerCase().includes(description.toLowerCase()));
         }
 
         return tasks;
