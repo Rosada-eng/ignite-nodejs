@@ -7,14 +7,15 @@ export function buildRouteRegex(path) {
     const params = path.match(ROUTE_PARAMS_REGEX);
 
     if (!params) {
-        return new RegExp(`^${path}$`, 'g');
+        return new RegExp(`^${path}$`,);
     }
 
     params.forEach(param => {
         const paramName = param.replace(':', '');
-        const regex = `(?<${paramName}>[a-zA-Z0-9\-]+)`;
+        const regex = `(?<${paramName}>[a-zA-Z0-9\-_]+)`;
         path = path.replace(param, regex);
     });
 
-    return new RegExp(`^${path}$`, 'g');
+
+    return new RegExp(`^${path}$`,);
 }
