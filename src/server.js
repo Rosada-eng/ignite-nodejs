@@ -5,7 +5,6 @@ import { routes } from './middlewares/routes.js';
 const hostname = '0.0.0.0';
 const port = 3333;
 
-
 const server = http.createServer(async (request, response) => {
 
     const { url, method } = request;
@@ -24,7 +23,6 @@ const server = http.createServer(async (request, response) => {
         return route.handler(request, response);
     
     }
-
 
     response.statusCode = 404;
     response.setHeader('Content-Type', 'application/json');
