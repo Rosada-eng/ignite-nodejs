@@ -50,5 +50,31 @@ export class TasksDatabase {
         return task;
     }
 
+    getOne(id) {
+        return this.#db['tasks'].find(task => task.id === id);
+    }
    
+    update(task, newData) {
+        Object.assign(task, newData);
+        task.updated_at = new Date();
+        
+        this.#persist();
+        return task;
+
+    }
+
+    delete(task) {
+        this.#db['tasks'] = this.#db['tasks'].filter(t => t.id !== task.id);
+        this.#persist();
+    }
+
+    completeTask(task) {
+        task.completed = !task.completed;
+
+        task.completed_at = new Date();
+        task.updated_at = new Date();
+
+
+        this.#persist();
+    }
 }
