@@ -11,22 +11,9 @@ export class Task {
         this.id = uuidv4();
         this.title = title;
         this.description = description;
+        this.completed = false;
         this.completed_at = null;
         this.created_at = new Date();
-        this.updated_at = new Date();
-    }
-
-    complete() {
-        this.completed_at = new Date();
-
-        this.updated_at = new Date();
-    }
-
-    update({ title, description }) {
-        if (title) this.title = title;
-
-        if (description) this.description = description;
-
         this.updated_at = new Date();
     }
 
