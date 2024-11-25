@@ -5,7 +5,7 @@ import tseslint from "typescript-eslint"
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   {
-    ignores: ["node_modules", "dist/"]
+    ignores: ["node_modules", "dist/"],
   },
   { files: ["**/*.{js,mjs,cjs,ts}"] },
   { languageOptions: { globals: globals.node } },
@@ -16,7 +16,7 @@ export default [
     rules: {
       "no-unused-vars": "off",
       "@typescript-eslint/no-unused-vars": "warn",
-      "comma-dangle": ["error", "always-multiline"]
-    }
-  }
+      "comma-dangle": ["error", "always-multiline"],
+    },
+  },
 ]
