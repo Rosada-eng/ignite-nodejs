@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "knex": "node --import tsx ./node_modules/.bin/knex",
+    "migrate:make": "node --import tsx ./node_modules/.bin/knex migrate:make",
+    "migrate:latest": "node --import tsx ./node_modules/.bin/knex migrate:latest",
     "format": "prettier --write .",
     "lint": "eslint . ",
     "lint:fix": "eslint . --fix "
