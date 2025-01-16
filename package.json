@@ -8,6 +8,7 @@
     "knex": "node --import tsx ./node_modules/.bin/knex",
     "migrate:make": "node --import tsx ./node_modules/.bin/knex migrate:make",
     "migrate:latest": "node --import tsx ./node_modules/.bin/knex migrate:latest",
+    "test": "vitest",
     "format": "prettier --write .",
     "lint": "eslint . ",
     "lint:fix": "eslint . --fix "
@@ -15,20 +16,28 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fastify/cookie": "^11.0.2",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.7",
     "fastify": "^5.1.0",
     "knex": "^3.1.0",
     "sqlite3": "^5.1.7",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^22.9.4",
+    "@types/supertest": "^6.0.2",
     "@typescript-eslint/eslint-plugin": "^8.16.0",
     "@typescript-eslint/parser": "^8.16.0",
     "eslint": "^9.15.0",
     "globals": "^15.12.0",
     "prettier": "^3.3.3",
+    "supertest": "^7.0.0",
     "tsx": "^4.19.2",
-    "typescript-eslint": "^8.16.0"
+    "typescript-eslint": "^8.16.0",
+    "vitest": "^2.1.8"
   }
 }
