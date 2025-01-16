@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, beforeEach, expect, test } from "vitest"
-import supertest from "../02-http-routes/node_modules/@types/supertest"
-import { app } from "../02-http-routes/src/app"
+import supertest from "supertest"
+import { app } from "../src/app"
 import { execSync } from "node:child_process"
 
 beforeAll(async () => {
