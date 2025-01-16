@@ -4,7 +4,7 @@ export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable("users", (t) => {
     t.uuid("id").primary()
     t.string("email").notNullable().unique()
-    t.string("hash").notNullable()
+    t.string("password_hash").notNullable()
     t.string("name").notNullable()
     t.dateTime("created_at").notNullable().defaultTo(knex.fn.now())
   })
@@ -13,12 +13,13 @@ export async function up(knex: Knex): Promise<void> {
     t.uuid("id").primary()
     t.uuid("user_id").references("id").inTable("users").notNullable()
     t.string("name").notNullable()
-    t.string("description").notNullable()
+    t.string("description")
     t.boolean("in_diet").notNullable().defaultTo(false)
     t.dateTime("consumed_at").notNullable().defaultTo(knex.fn.now())
   })
 }
 
 export async function down(knex: Knex): Promise<void> {
-  knex.schema.dropTable("users")
+  await knex.schema.dropTable("users")
+  await knex.schema.dropTable("meals")
 }
