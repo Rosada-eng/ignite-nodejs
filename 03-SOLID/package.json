@@ -1,0 +1,16 @@
+{
+  "name": "03-solid",
+  "version": "1.0.0",
+  "description": "API to manage PET's adoption using SOLID",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run vitest",
+    "start": "node dist/index.js",
+    "dev": "nodemon src/index.ts",
+    "build": "tsc",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix"
+  },
+  "author": "",
+  "license": "ISC"
+}
