@@ -31,16 +31,20 @@ As a NGO, ...
    - email
    - password
    - address
+   - zipcode
    - city
    - state
-   - whatsapp number
+   - phone
 
 As a USER, ...
 
 4. I want to find a pet for adoption
    4.1 Adoptions search must be done by city level
    4.2 Filters might be applied by pet's characteristics
-
+   4.2.1 I want to filter by Age Category (baby, young, adult, senior)
+   4.2.2 I want to filter by Energy Level (low, medium, high)
+   4.2.3 I want to filter by Size (small, medium, big)
+   4.2.4 I want to filter by Space for Living (small, medium, big)
 5. I want to filter available pets according to their characteristics
 
 6. I want to check details about an adoption.
