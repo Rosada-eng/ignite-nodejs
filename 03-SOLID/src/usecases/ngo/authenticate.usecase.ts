@@ -1,15 +1,19 @@
 import { NgoRepository } from '@/repositories/ngo.repository'
+import { Ngo } from '@prisma/client'
 import { compare } from 'bcryptjs'
 
-export interface LoginNgoUseCaseProps {
+export interface AuthenticateNgoUseCaseProps {
     email: string
     password: string
 }
 
-export class LoginNgoUseCase {
+export interface AuthenticateNgoUseCaseResponse
+    extends Omit<Ngo, 'passwordHash'> {}
+
+export class AuthenticateNgoUseCase {
     constructor(private readonly ngoRepository: NgoRepository) {}
 
-    async execute(data: LoginNgoUseCaseProps) {
+    async execute(data: AuthenticateNgoUseCaseProps) {
         const ngo = await this.ngoRepository.findByEmail(data.email)
 
         const isPasswordValid = await compare(data.password, ngo.passwordHash)
@@ -18,10 +22,9 @@ export class LoginNgoUseCase {
             throw new Error('Invalid password')
         }
 
-        // TODO: implement refresh token
-
+        const { passwordHash, ...ngoWithoutPassword } = ngo
         return {
-            token: 'token123',
+            ngo: ngoWithoutPassword,
         }
     }
 }

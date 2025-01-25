@@ -1,15 +1,17 @@
 import { InMemoryNgoRepository } from '@/repositories/in-memory/in-memory-ngo.repository'
 import { NgoRepository } from '@/repositories/ngo.repository'
 import { beforeEach, expect, it } from 'vitest'
-import { LoginNgoUseCase } from './login.usecase'
+import { AuthenticateNgoUseCase } from './authenticate.usecase'
 import { hash } from 'bcryptjs'
+import { Ngo } from '@prisma/client'
 
 let ngoRepository: NgoRepository
-let sup: LoginNgoUseCase
+let sup: AuthenticateNgoUseCase
+let ngo: Ngo
 
 beforeEach(async () => {
     ngoRepository = new InMemoryNgoRepository()
-    sup = new LoginNgoUseCase(ngoRepository)
+    sup = new AuthenticateNgoUseCase(ngoRepository)
 
     const validNgo = {
         name: 'NGO 1',
@@ -24,7 +26,7 @@ beforeEach(async () => {
         longitude: 1,
     }
 
-    const ngo = await ngoRepository.create(validNgo)
+    ngo = await ngoRepository.create(validNgo)
 })
 
 it('should be able to login with valid credentials', async () => {
@@ -33,9 +35,8 @@ it('should be able to login with valid credentials', async () => {
         password: 'password123',
     })
 
-    expect(result).toEqual({
-        token: 'token123',
-    })
+    const { passwordHash, ...ngoWithoutPassword } = ngo
+    expect(result).toMatchObject({ ngo: ngoWithoutPassword })
 })
 
 it('should not be able to login with invalid credentials', async () => {
