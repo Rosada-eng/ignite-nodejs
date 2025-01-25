@@ -14,4 +14,13 @@ export class InMemoryPetRepository implements PetRepository {
         this.pets.push(pet)
         return pet
     }
+
+    async delete(petId: string) {
+        this.pets = this.pets.filter(pet => pet.id !== petId)
+    }
+
+    async findById(petId: string) {
+        const pet = this.pets.find(pet => pet.id === petId)
+        return pet || null
+    }
 }
