@@ -4,11 +4,17 @@ import { NgoRepository } from '../ngo.repository'
 export class InMemoryNgoRepository implements NgoRepository {
     public data: Ngo[] = []
 
-    findById(id: string) {
-        return this.data.find(ngo => ngo.id === id)
+    async findById(id: string) {
+        return this.data.find(ngo => ngo.id === id) || null
     }
 
-    create(data: Prisma.NgoCreateInput) {
+    async create(data: Prisma.NgoCreateInput) {
+        const ngoWithSameEmail = this.data.find(ngo => ngo.email === data.email)
+
+        if (ngoWithSameEmail) {
+            throw new Error('NGO with this email already exists.')
+        }
+
         const newNgo = {
             ...data,
             id: data.id ? data.id : randomUUID(),
@@ -16,5 +22,15 @@ export class InMemoryNgoRepository implements NgoRepository {
         this.data.push(newNgo)
 
         return newNgo
+    }
+
+    async findByEmail(email: string) {
+        const ngo = this.data.find(ngo => ngo.email === email)
+
+        if (!ngo) {
+            throw new Error('NGO not found')
+        }
+
+        return ngo
     }
 }

@@ -15,4 +15,12 @@ export class PrismaNGORepository implements NgoRepository {
             data: ngo,
         })
     }
+
+    async findByEmail(email: string) {
+        return await prisma.ngo.findUniqueOrThrow({
+            where: {
+                email,
+            },
+        })
+    }
 }
