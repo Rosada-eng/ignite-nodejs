@@ -23,4 +23,21 @@ export class InMemoryPetRepository implements PetRepository {
         const pet = this.pets.find(pet => pet.id === petId)
         return pet || null
     }
+
+    async update(pet: Pet) {
+        const petIndex = this.pets.findIndex(pet => pet.id === pet.id)
+
+        if (petIndex === -1) {
+            throw new Error('Pet not found')
+        }
+
+        const newPet = {
+            ...this.pets[petIndex],
+            ...pet,
+        } as Pet
+
+        this.pets[petIndex] = newPet
+
+        return newPet
+    }
 }

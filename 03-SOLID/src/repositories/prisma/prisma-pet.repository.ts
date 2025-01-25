@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma'
-import { Prisma } from '@prisma/client'
+import { Pet, Prisma } from '@prisma/client'
 import { PetRepository } from '../pet.repository'
 
 export class PrismaPetRepository implements PetRepository {
@@ -22,6 +22,15 @@ export class PrismaPetRepository implements PetRepository {
             where: {
                 id: petId,
             },
+        })
+    }
+
+    async update(pet: Pet) {
+        return await prisma.pet.update({
+            where: {
+                id: pet.id,
+            },
+            data: pet,
         })
     }
 }
