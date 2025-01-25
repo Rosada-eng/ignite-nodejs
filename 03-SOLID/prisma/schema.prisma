@@ -14,33 +14,37 @@ datasource db {
 }
 
 model Pet {
-  id                 String @id @default(cuid())
-  name               String
-  age                String
-  size               Int
-  energy_level       Int
-  independence_level Int
-  space_for_living   Int
+  id                String   @id @default(cuid())
+  name              String
+  birthdate         DateTime
+  size              Int
+  energyLevel       Int      @map("energy_level")
+  independenceLevel Int      @map("independence_level")
+  spaceForLiving    Int      @map("space_for_living")
 
-  ngo    NGO    @relation(fields: [ngo_id], references: [id])
-  ngo_id String
+  ngo   Ngo    @relation(fields: [ngoId], references: [id])
+  ngoId String @map("ngo_id")
 
   adopted_at   DateTime?
   requirements String[]
+
+  @@map("pet")
 }
 
-model NGO {
-  id        String @id @default(cuid())
-  name      String
-  email     String
-  password  String
-  address   String
-  zipcode   String
-  city      String
-  state     String
-  phone     String
-  latitude  Float
-  longitude Float
+model Ngo {
+  id           String @id @default(cuid())
+  name         String
+  email        String
+  passwordHash String @map("password_hash")
+  address      String
+  zipcode      String
+  city         String
+  state        String
+  phone        String
+  latitude     Float
+  longitude    Float
 
   pets Pet[]
+
+  @@map("ngo")
 }
