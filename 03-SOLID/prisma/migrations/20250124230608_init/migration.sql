@@ -1,8 +1,8 @@
 -- CreateTable
-CREATE TABLE "Pet" (
+CREATE TABLE "pet" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "age" TEXT NOT NULL,
+    "birthdate" TIMESTAMP(3) NOT NULL,
     "size" INTEGER NOT NULL,
     "energy_level" INTEGER NOT NULL,
     "independence_level" INTEGER NOT NULL,
@@ -11,15 +11,15 @@ CREATE TABLE "Pet" (
     "adopted_at" TIMESTAMP(3),
     "requirements" TEXT[],
 
-    CONSTRAINT "Pet_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "pet_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "NGO" (
+CREATE TABLE "ngo" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "password" TEXT NOT NULL,
+    "password_hash" TEXT NOT NULL,
     "address" TEXT NOT NULL,
     "zipcode" TEXT NOT NULL,
     "city" TEXT NOT NULL,
@@ -28,8 +28,8 @@ CREATE TABLE "NGO" (
     "latitude" DOUBLE PRECISION NOT NULL,
     "longitude" DOUBLE PRECISION NOT NULL,
 
-    CONSTRAINT "NGO_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "ngo_pkey" PRIMARY KEY ("id")
 );
 
 -- AddForeignKey
-ALTER TABLE "Pet" ADD CONSTRAINT "Pet_ngo_id_fkey" FOREIGN KEY ("ngo_id") REFERENCES "NGO"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "pet" ADD CONSTRAINT "pet_ngo_id_fkey" FOREIGN KEY ("ngo_id") REFERENCES "ngo"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

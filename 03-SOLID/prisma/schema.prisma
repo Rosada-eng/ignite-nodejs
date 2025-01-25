@@ -34,7 +34,7 @@ model Pet {
 model Ngo {
   id           String @id @default(cuid())
   name         String
-  email        String
+  email        String @unique
   passwordHash String @map("password_hash")
   address      String
   zipcode      String
