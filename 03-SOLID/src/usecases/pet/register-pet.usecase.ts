@@ -19,11 +19,15 @@ export class RegisterPetUsecase {
         private readonly ngoRepository: NgoRepository
     ) {}
 
-    async execute(data: RegisterPetUsecaseProps) {
+    async execute(data: RegisterPetUsecaseProps, authorId: string) {
         const ngo = await this.ngoRepository.findById(data.ngoId)
 
         if (!ngo) {
             throw new Error('Invalid NGO')
+        }
+
+        if (ngo.id !== authorId) {
+            throw new Error('This NGO does not belong to this user')
         }
 
         if (data.requirements.length === 0) {

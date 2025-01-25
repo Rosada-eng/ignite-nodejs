@@ -5,18 +5,20 @@ import { randomUUID } from 'crypto'
 import { test, expect, it, beforeEach } from 'vitest'
 
 let petRepository: PetRepository
-
 let sut: DeletePetUseCase
+let authorId: string
 
 beforeEach(() => {
     petRepository = new InMemoryPetRepository()
     sut = new DeletePetUseCase(petRepository)
+    authorId = randomUUID()
 })
 
 it('should be able to delete a pet registered by the same NGO', async () => {
     const ngoId = randomUUID()
     const petId = randomUUID()
 
+    authorId = ngoId
     const validPet = {
         id: petId,
         name: 'validPet',
@@ -32,10 +34,9 @@ it('should be able to delete a pet registered by the same NGO', async () => {
 
     const validInputData: DeletePetUseCaseProps = {
         petId: petId,
-        ngoId: ngoId,
     }
 
-    await expect(sut.execute(validInputData)).resolves.toBeUndefined()
+    await expect(sut.execute(validInputData, authorId)).resolves.toBeUndefined()
 
     const pet = await petRepository.findById(petId)
 
@@ -61,17 +62,15 @@ it('should NOT be able to delete a pet registered by another NGO', async () => {
 
     const invalidInputData: DeletePetUseCaseProps = {
         petId: petId,
-        ngoId: 'notValidNgoId',
     }
 
-    await expect(sut.execute(invalidInputData)).rejects.toThrow()
+    await expect(sut.execute(invalidInputData, authorId)).rejects.toThrow()
 })
 
 it('should NOT be able to delete a pet that does not exist', async () => {
     const invalidInputData: DeletePetUseCaseProps = {
         petId: 'notValidPetId',
-        ngoId: 'notValidNgoId',
     }
 
-    await expect(sut.execute(invalidInputData)).rejects.toThrow()
+    await expect(sut.execute(invalidInputData, authorId)).rejects.toThrow()
 })

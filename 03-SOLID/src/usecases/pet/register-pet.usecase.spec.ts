@@ -12,11 +12,12 @@ import { randomUUID } from 'crypto'
 let petRepository: PetRepository
 let ngoRepository: NgoRepository
 let sut: RegisterPetUsecase
-
+let authorId: string
 beforeEach(() => {
     petRepository = new InMemoryPetRepository()
     ngoRepository = new InMemoryNgoRepository()
     sut = new RegisterPetUsecase(petRepository, ngoRepository)
+    authorId = randomUUID()
 })
 
 it('should be able to register a pet with valid ngo and requirements set', async () => {
@@ -34,6 +35,8 @@ it('should be able to register a pet with valid ngo and requirements set', async
         phone: 'valid phone',
     }
 
+    authorId = validNgo.id
+
     await ngoRepository.create(validNgo)
 
     const inputData: RegisterPetUsecaseProps = {
@@ -48,7 +51,7 @@ it('should be able to register a pet with valid ngo and requirements set', async
         ngoId: validNgo.id,
     }
 
-    const result = await sut.execute(inputData)
+    const result = await sut.execute(inputData, authorId)
 
     expect(result.id).toBeTruthy()
 })
@@ -66,9 +69,9 @@ it('should NOT be able to register a pet with invalid ngo', async () => {
         ngoId: 'invalid ngo id',
     }
 
-    expect(async () => await sut.execute(invalidInputData)).rejects.toThrow(
-        Error
-    )
+    expect(
+        async () => await sut.execute(invalidInputData, authorId)
+    ).rejects.toThrow(Error)
 })
 
 it('should NOT be able to register a pet without requirements', async () => {
@@ -86,6 +89,8 @@ it('should NOT be able to register a pet without requirements', async () => {
         phone: 'valid phone',
     }
 
+    authorId = validNgo.id
+
     await ngoRepository.create(validNgo)
 
     const invalidInputData: RegisterPetUsecaseProps = {
@@ -100,7 +105,7 @@ it('should NOT be able to register a pet without requirements', async () => {
         ngoId: validNgo.id,
     }
 
-    expect(async () => await sut.execute(invalidInputData)).rejects.toThrow(
-        Error
-    )
+    expect(
+        async () => await sut.execute(invalidInputData, authorId)
+    ).rejects.toThrow(Error)
 })
