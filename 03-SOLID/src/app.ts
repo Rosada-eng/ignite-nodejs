@@ -2,6 +2,7 @@ import fastifyCors from '@fastify/cors'
 import fastifyJwt from '@fastify/jwt'
 import fastify from 'fastify'
 import { ngoRoutes } from './http/controllers/ngo/routes'
+import { petRoutes } from './http/controllers/pet/routes'
 
 export const app = fastify()
 
@@ -17,3 +18,4 @@ app.register(fastifyCors, {
 })
 
 app.register(ngoRoutes)
+app.register(petRoutes)
