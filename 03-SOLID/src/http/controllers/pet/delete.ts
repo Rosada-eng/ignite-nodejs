@@ -19,5 +19,5 @@ export async function remove(request: FastifyRequest, reply: FastifyReply) {
         ngoId
     )
 
-    return reply.status(200).send()
+    return reply.status(204).send()
 }
