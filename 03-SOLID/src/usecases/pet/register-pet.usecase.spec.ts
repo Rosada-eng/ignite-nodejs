@@ -41,7 +41,6 @@ it('should be able to register a pet with valid ngo and requirements set', async
 
     const inputData: RegisterPetUsecaseProps = {
         name: 'doguinho',
-        description: 'a very friendly dog',
         birthdate: new Date(),
         size: 1,
         energyLevel: 1,
@@ -59,7 +58,6 @@ it('should be able to register a pet with valid ngo and requirements set', async
 it('should NOT be able to register a pet with invalid ngo', async () => {
     const invalidInputData: RegisterPetUsecaseProps = {
         name: 'doguinho',
-        description: 'a very friendly dog',
         birthdate: new Date(),
         size: 1,
         energyLevel: 1,
@@ -95,7 +93,6 @@ it('should NOT be able to register a pet without requirements', async () => {
 
     const invalidInputData: RegisterPetUsecaseProps = {
         name: 'doguinho',
-        description: 'a very friendly dog',
         birthdate: new Date(),
         size: 1,
         energyLevel: 1,

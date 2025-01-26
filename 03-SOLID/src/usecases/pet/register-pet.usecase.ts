@@ -3,7 +3,6 @@ import { PetRepository } from '@/repositories/pet.repository'
 
 export interface RegisterPetUsecaseProps {
     name: string
-    description: string | undefined
     birthdate: Date
     size: number
     energyLevel: number
