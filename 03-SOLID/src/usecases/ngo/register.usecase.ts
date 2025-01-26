@@ -18,8 +18,10 @@ export class RegisterNgoUseCase {
     ): Promise<RegisterNgoUseCaseResponse> {
         const hashedPassword = await hash(data.password, 6)
 
+        const { password, ...dataWithoutPassword } = data
+
         const ngo = await this.ngoRepository.create({
-            ...data,
+            ...dataWithoutPassword,
             passwordHash: hashedPassword,
         })
 
