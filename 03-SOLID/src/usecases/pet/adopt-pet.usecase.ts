@@ -22,9 +22,11 @@ export class AdoptPetUseCase {
             throw new Error('Pet already adopted')
         }
 
-        await this.petRepository.update({
+        const adoptedPet = await this.petRepository.update({
             ...pet,
             adopted_at: new Date(),
         })
+
+        return adoptedPet
     }
 }
