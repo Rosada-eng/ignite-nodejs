@@ -1,4 +1,4 @@
-import { makeRegisterNgoUseCase } from '@/usecases/factories/make-register-usecase'
+import { makeRegisterNgoUseCase } from '@/usecases/factories/make-register-ngo-usecase'
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
 
