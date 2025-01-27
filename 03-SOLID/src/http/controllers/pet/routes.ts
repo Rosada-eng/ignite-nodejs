@@ -4,6 +4,7 @@ import { verifyJWT } from '@/http/middlewares/verify-jwt'
 import { remove } from './delete'
 import { update } from './update'
 import { adopt } from './adopt'
+import { listAvailablePets } from './list-available'
 
 export async function protectedPetRoutes(app: FastifyInstance) {
     app.addHook('onRequest', verifyJWT)
@@ -18,4 +19,6 @@ export async function petRoutes(app: FastifyInstance) {
     app.register(protectedPetRoutes, {
         prefix: '/pet',
     })
+
+    app.get('/pets', listAvailablePets)
 }
