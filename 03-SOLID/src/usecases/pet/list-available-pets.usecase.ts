@@ -1,4 +1,3 @@
-import { NgoRepository } from '@/repositories/ngo.repository'
 import { PetRepository } from '@/repositories/pet.repository'
 
 export type AgeCategory = 'baby' | 'young' | 'adult' | 'senior'
