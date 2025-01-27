@@ -15,10 +15,10 @@ export async function authenticate(
 
     const inputData = authenticateNgoBodySchema.parse(request.body)
 
-    const { ngo } = await authenticateNgoUseCase.execute(inputData)
+    const { id } = await authenticateNgoUseCase.execute(inputData)
 
     const token = await reply.jwtSign(
-        { sub: ngo.id },
+        { sub: id },
         { sign: { expiresIn: '30m' } }
     )
 

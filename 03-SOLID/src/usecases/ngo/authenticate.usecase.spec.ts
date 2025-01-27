@@ -2,7 +2,7 @@ import { InMemoryNgoRepository } from '@/repositories/in-memory/in-memory-ngo.re
 import { NgoRepository } from '@/repositories/ngo.repository'
 import { beforeEach, expect, it } from 'vitest'
 import { AuthenticateNgoUseCase } from './authenticate.usecase'
-import { hash } from 'bcryptjs'
+import bcrypt from 'bcryptjs'
 import { Ngo } from '@prisma/client'
 
 let ngoRepository: NgoRepository
@@ -16,7 +16,7 @@ beforeEach(async () => {
     const validNgo = {
         name: 'NGO 1',
         email: 'ngo1@example.com',
-        passwordHash: await hash('password123', 6),
+        passwordHash: await bcrypt.hash('password123', 6),
         address: 'address1',
         zipcode: 'zipcode1',
         city: 'city1',
@@ -35,8 +35,7 @@ it('should be able to login with valid credentials', async () => {
         password: 'password123',
     })
 
-    const { passwordHash, ...ngoWithoutPassword } = ngo
-    expect(result).toMatchObject({ ngo: ngoWithoutPassword })
+    expect(result.id).toEqual(expect.any(String))
 })
 
 it('should not be able to login with invalid credentials', async () => {
