@@ -1,6 +1,6 @@
 import { NgoRepository } from '@/repositories/ngo.repository'
 import { Ngo } from '@prisma/client'
-import { compare } from 'bcryptjs'
+import bcrypt from 'bcryptjs'
 
 export interface AuthenticateNgoUseCaseProps {
     email: string
@@ -16,15 +16,17 @@ export class AuthenticateNgoUseCase {
     async execute(data: AuthenticateNgoUseCaseProps) {
         const ngo = await this.ngoRepository.findByEmail(data.email)
 
-        const isPasswordValid = await compare(data.password, ngo.passwordHash)
+        const isPasswordValid = await bcrypt.compare(
+            data.password,
+            ngo.passwordHash
+        )
 
         if (!isPasswordValid) {
             throw new Error('Invalid password')
         }
 
-        const { passwordHash, ...ngoWithoutPassword } = ngo
         return {
-            ngo: ngoWithoutPassword,
+            id: ngo.id,
         }
     }
 }

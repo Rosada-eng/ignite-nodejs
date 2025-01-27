@@ -1,6 +1,6 @@
 import { NgoRepository } from '@/repositories/ngo.repository'
 import { Ngo, Prisma } from '@prisma/client'
-import { hash } from 'bcryptjs'
+import bcrypt from 'bcryptjs'
 
 export interface RegisterNgoUseCaseProps
     extends Omit<Prisma.NgoCreateInput, 'passwordHash' | 'id' | 'pets'> {
@@ -16,7 +16,7 @@ export class RegisterNgoUseCase {
     async execute(
         data: RegisterNgoUseCaseProps
     ): Promise<RegisterNgoUseCaseResponse> {
-        const hashedPassword = await hash(data.password, 6)
+        const hashedPassword = await bcrypt.hash(data.password, 6)
 
         const { password, ...dataWithoutPassword } = data
 
