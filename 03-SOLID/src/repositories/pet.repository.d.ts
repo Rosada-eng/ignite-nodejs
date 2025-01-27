@@ -5,4 +5,8 @@ export interface PetRepository {
     delete(petId: string): Promise<void>
     findById(petId: string): Promise<Pet | null>
     update(pet: Pet): Promise<Pet>
+    listAvailablePets(
+        city: string,
+        filters: ListAvailablePetsUseCaseFilters
+    ): Promise<Pet[]>
 }
